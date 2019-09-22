@@ -10,7 +10,7 @@
 我的邮箱：lishu14@foxmail.com
 ### 进度展示
 题号 | 题目 | 时间 | 备注  
--|-|-
-1 | Two Sum | 20190920 | 
-2 | Add Two Numbers | 20190921 | 
-3 | Longest Substring Without Repeating Characters | 20190922 | 
+-|-|-|-
+1 | Two Sum | 20190920 |  |
+2 | Add Two Numbers | 20190921 |  |
+3 | Longest Substring Without Repeating Characters | 20190922 |  |
