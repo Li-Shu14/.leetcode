@@ -14,3 +14,4 @@
 1 | Two Sum | 20190920 |  |
 2 | Add Two Numbers | 20190921 |  |
 3 | Longest Substring Without Repeating Characters | 20190922 |  |
+5 | Longest Palindromic Substring | 20190923 | 50min，了解了LCS的动态规划算法 |

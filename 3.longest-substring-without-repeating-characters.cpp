@@ -4,9 +4,7 @@
  * [3] Longest Substring Without Repeating Characters
  */
 #include <string>
-#include <iostream>
 #include <vector>
-#include <unordered_map>
 #include <cstring>
 #include <set>
 using namespace std;
@@ -36,14 +34,6 @@ public:
             max_len = (len > max_len)? len : max_len;
         }
         return max_len;       
-    }
-    int char_to_int(char c){
-        if (c==' '){
-            return 26;
-        }
-        else {
-            return int(c)-97;
-        }
     }
     int lengthOfLongestSubstring2(string s) {
 /*
@@ -81,7 +71,7 @@ public:
 /*
   ✔ Your runtime beats 94.31 % of cpp submissions
   ✔ Your memory usage beats 77.61 % of cpp submissions (9.5 MB)
-  written by LuJiaJian
+  written by LuJJ
 */
         int l=s.length();
             if(l==0)
@@ -118,6 +108,7 @@ public:
 /*
   ✔ Your runtime beats 20.35 % of cpp submissions
   ✔ Your memory usage beats 16.92 % of cpp submissions (15.9 MB)
+  Written by others
 */
         set<char> t;
         int res = 0, left = 0, right = 0;
@@ -133,6 +124,11 @@ public:
     }
 
     int lengthOfLongestSubstring5(string s) {
+/*
+  ✔ Your runtime beats 94.31 % of cpp submissions
+  ✔ Your memory usage beats 67.66 % of cpp submissions (10.6 MB)
+  Written by others
+*/
         vector<int> m(256, -1);
         int res = 0, left = -1;
         for (int i = 0; i < s.size(); ++i) {
