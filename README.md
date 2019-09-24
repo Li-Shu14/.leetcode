@@ -15,3 +15,4 @@
 2 | Add Two Numbers | 20190921 |  |
 3 | Longest Substring Without Repeating Characters | 20190922 |  |
 5 | Longest Palindromic Substring | 20190923 | 50min，了解了LCS的动态规划算法 |
+6 | ZigZag Conversion | 20190924 | 50min，学会对象数组和对象vector，后者更具有优势。在函数内部将产生的对象传递到函数外需要通过new和指针，函数本身为指针类型 |
