@@ -16,3 +16,5 @@
 3 | Longest Substring Without Repeating Characters | 20190922 |  |
 5 | Longest Palindromic Substring | 20190923 | 50min，了解了LCS的动态规划算法 |
 6 | ZigZag Conversion | 20190924 | 50min，学会对象数组和对象vector，后者更具有优势。在函数内部将产生的对象传递到函数外需要通过new和指针，函数本身为指针类型 |
+7 | Reverse Integer | 20190925 | 30min，处理overflow的方法，记住：2147483648是2的31次方。注意负数取余和整除的结果，与floor()的区别。
+9 | Palindrome Number | 20190925 | 5min，直接参考第7题即可。但速度还是比较慢？有更快的解法吗？
