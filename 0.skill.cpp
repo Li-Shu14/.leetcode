@@ -99,6 +99,7 @@ void QuickSort_dir(int array[], int start, int last) {
     QuickSort_dir(array, start, i - 1);
     QuickSort_dir(array, i + 1, last);
 }
+
 //从右往左排。
 void QuickSort_dir2(int array[], int start, int last) {   // 逆序
     if (start >= last) return; //只有一个元素时到达递归终点
@@ -145,12 +146,12 @@ void qsort(int* &a, int start, int end) {
 // 插入排序
 void insertion(vector<int>& arr){ //如果采用数组的话，需要将数组长度统计出来，或者直接通过参数传递进去。
 	for(int i=1;i<arr.size();i++){
-		int temp=arr[i];
-		int j=i-1;
-		for(;j>=0 && temp<arr[j];j--){
-			arr[j+1] = arr[j];
+		int pivot=arr[i];
+        int j = 0;
+		for(int j=i-1; j>=0 ;j--){
+            if (pivot<arr[j] ) arr[j+1] = arr[j];
 		}
-		arr[j+1] = temp;
+		arr[j+1] = pivot;
 	}
 }
 
