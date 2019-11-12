@@ -34,9 +34,8 @@ Your memory usage beats 75 % of cpp submissions (8.6 MB)
 上述方法的改进，通过添加指向头部的虚拟结点可以避免对特殊情况的讨论。更美丽。但是多一个结点，占用的空间变大了些。
 
 方法三： 单次循环————快慢指针
-208/208 cases passed (0 ms)
-Your runtime beats 100 % of cpp submissions
-Your memory usage beats 100 % of cpp submissions (8.4 MB)
+Runtime: 4 ms, faster than 85.61% of C++ online submissions for Remove Nth Node From End of List.
+Memory Usage: 8.6 MB, less than 71.05% of C++ online submissions for Remove Nth Node From End of List.
 */
 class Solution {
 public:

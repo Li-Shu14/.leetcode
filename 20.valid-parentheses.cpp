@@ -7,7 +7,6 @@
 // @lc code=start
 #include <vector>
 #include <string>
-#include <stack>
 using namespace std;
 /*
 76/76 cases passed (4 ms)
@@ -16,7 +15,7 @@ Your memory usage beats 100 % of cpp submissions (8.2 MB)
 */
 class Solution {
 public:
-    bool isValid1(string s) {  //vec.back()
+    bool isValid(string s) {  //vec.back()
         vector<char> z;
         if (s=="") return true;
         
@@ -35,37 +34,8 @@ public:
         if (z.size() == 0) return true;
         else return false;
     }
-    bool isValid2(string s) {
-        stack<char> stack;
 
-        if(s.length() == 0){
-            return true;
-        }
-        if(s.length() == 1){
-            return false;
-        }
-        
-        for(int i =0 ; i < s.length(); i++){
-            char c = s[i];
-            if(c == '}'|| c == ')' || c == ']'){
-                if(stack.size() == 0 ) return false;
-                if(c == '}' && stack.top() != '{') return false;
-                if(c == ')' && stack.top() != '(') return false;
-                if(c == ']' && stack.top() != '[') return false;
-                stack.pop();
-                
-            } else {
-                stack.push(c);
-            }
-        }
-        if(stack.size() == 0) return true;
-        return false;
-    }
-
-    bool isValid(string s) {
-        return isValid2(s);
-    }
-
+    
 private:
     bool isback(char c) {
         if (c==')' || c==']' || c=='}') return true;

@@ -22,6 +22,12 @@ Your runtime beats 59.73 % of cpp submissions
 3. for循环字符串迭代器： for (char c : string) {}
 4. 思路上的不同，前者只使用了一个固定的combination,地址传递。在递归的时候用了复制传递combination，从空间上讲浪费了。
 5. 灵活运用两个字符相减得到整型的用法。
+
+方法三：
+25/25 cases passed (4 ms)
+Your runtime beats 59.73 % of cpp submissions
+Your memory usage beats 75.71 % of cpp submissions (8.7 MB)
+参考了https://blog.csdn.net/RaKiRaKiRa/article/details/82941290  的做法。他的map生成过程太丑了。方法应该叫做“生长法”，用三层循环取代了递归。
 */
 
 vector<string> letterCombinations1(string digits) {
