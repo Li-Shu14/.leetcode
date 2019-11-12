@@ -80,9 +80,9 @@ int partition(int array[], int l, int r){
 
 void QuickSort(int array[], int l, int r) {
     if (l < r) {
-        int p = partition(array,l,r);   
-        QuickSort(array,l,p-1);
-        QuickSort(array,p+1,r);
+        int pivot = partition(array,l,r);   
+        QuickSort(array,l,pivot-1);
+        QuickSort(array,pivot+1,r);
     }
 }
 // 最一般的：从小到大，每次以最左边
@@ -157,7 +157,7 @@ void insertion(vector<int>& arr){ //如果采用数组的话，需要将数组�
 
 int main() {
 	int array[11] = {15,7, 3, 19, 4, 63, 2, 99, 18, 1, 25}; 
-	qsort(array, 0, 10);
+	// qsort(array, 0, 10);
 	for(int i = 0; i < 11; i++)  
 		cout << array[i] << "  ";   
     cout<<endl;  
