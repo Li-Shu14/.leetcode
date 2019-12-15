@@ -4,11 +4,10 @@ using namespace std;
 class Solution {
 public:
 	vector<vector<int>> threeSum1(vector<int>& nums) {
-/*
-runtime error......
-hashmap
-
-*/
+	/*
+	runtime error......
+	hashmap
+	*/
     	vector<vector<int>> ret;
 		quicksort(nums, 0, nums.size() - 1);
         //sort(num.begin(),num.end()); //在算法不要求手写快排的时候还是推荐这种方式。
@@ -23,7 +22,8 @@ hashmap
 			map[nums[i]] += 1;
 			cout << map[nums[i]] << endl;
         }
-		int lasti = -1,int lastj = -1;
+		int lasti = -1;
+		int lastj = -1;
 		for (int i = 0; i <nums.size(); ++i) {
 			if (nums[i] == lasti) continue;
 			map[nums[i]] -= 1; //取出
@@ -43,9 +43,10 @@ hashmap
 		}
         delete []map;
 		return ret;
+	}
 
-    vector<vector<int>> threeSum1(vector<int>& nums) {
-/* 推荐！双指针法！o(NlogN) + o(n2)的时间福复杂度
+    vector<vector<int>> threeSum2(vector<int>& nums) {
+/* 推荐！双指针法！o(NlogN) + o(n2)的时间福复杂度。之后的4sum 5sum都可以用这种方法来解决。
 Runtime: 100 ms, faster than 71.54% of C++ online submissions for 3Sum.
 Memory Usage: 14.6 MB, less than 100.00% of C++ online submissions for 3Sum.
 参考地址：https://www.cnblogs.com/wangkundentisy/p/9079622.html 原文的方法二太啰嗦了，我简化了写法。
@@ -69,10 +70,8 @@ Memory Usage: 14.6 MB, less than 100.00% of C++ online submissions for 3Sum.
         }
         return rs;
     }
-
-
     vector<vector<int>> threeSum(vector<int>& nums) {
-        return threeSum1(nums);
+        return threeSum2(nums);
 	}
 
 private:
