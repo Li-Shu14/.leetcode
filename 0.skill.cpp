@@ -194,3 +194,16 @@ void quicksort(int a[],int start, int end) {
     quicksort(a,i+1,end);
     
 }
+
+// 二分查找：见704题
+// 如果把移位操作换成普通的除以2，则内存占用会稍微多一点点。速度影响不大。
+    int search(vector<int>& a, int target) {
+        int l = 0, r = a.size()-1, mid;
+        while(l <= r) {
+            mid = (l + r) >> 1; 
+            if (a[mid] == target) return mid;
+            else if (a[mid] > target) r = mid - 1;
+            else l = mid + 1;
+        }
+        return -1;
+    }

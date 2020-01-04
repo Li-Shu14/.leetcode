@@ -2,6 +2,7 @@
  * @lc app=leetcode id=39 lang=cpp
  *
  * [39] Combination Sum
+<<<<<<< HEAD
  * Input: candidates = [2,3,6,7], target = 7,
 A solution set is:
 [
@@ -48,4 +49,13 @@ public:
     }
 };
 // @lc code=end
+=======
+ */
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        
+    }
+};
+>>>>>>> 9952508f3f449797a0e96a06f3214181e433ed1c
 

@@ -30,7 +30,7 @@ public:
     int search2(vector<int>& nums, int target) {
         int left = 0, right = nums.size() - 1, mid;
         while (left <= right) {
-            mid = (left + right) >> 1;
+            mid = (left + right) >> 1; // 如果把移位操作换成普通的除以2，则内存占用会稍微多一点点。速度影响不大。
             if (nums[mid] == target) return mid;
             else if (nums[mid] > target) right = mid - 1;
             else left = mid + 1;
