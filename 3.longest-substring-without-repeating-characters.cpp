@@ -16,7 +16,7 @@ public:
   ✔ Your runtime beats 82.23 % of cpp submissions
   ✔ Your memory usage beats 75.12 % of cpp submissions (9.7 MB)
 */
-        vector<int> vec;
+        vector<int> vec; //维系一个临时向量
         vector<int>::iterator find_mem;
         int len = 0, max_len = 0, index = 0;
         for (int i=0;i<s.length();i++){
@@ -26,8 +26,8 @@ public:
                 len++;
             }
             else {
-                index = &*find_mem - &vec[0];
-                vec.erase(vec.begin(),find_mem+1);
+                // index = &*find_mem - &vec[0];
+                vec.erase(vec.begin(),find_mem+1); //比如['a','n','f','y']这时又来了一个'f'就把从'a'到'f'清除掉，然后再push新的'f'
                 vec.push_back(s[i]);                
                 len = vec.size();
             }
@@ -39,13 +39,14 @@ public:
 /*
   ✔ Your runtime beats 47.55 % of cpp submissions
   ✔ Your memory usage beats 91.04 % of cpp submissions (9.2 MB)
+  此法不推荐
 */
         int hash[127];
         memset(hash,-1,sizeof(hash));
         int len = 0, max_len = 0, index = 0,num = 0,count = 0;
         for (int i=0;i<s.length();i++){
             num = int(s[i]);
-            if ( hash[num] == -1 ) {
+            if ( hash[num] == -1 ) { //将方法一的find替换为了哈希表，优化查找速度，但最终速度竟然下降了？！
                 hash[num] = i;
                 len++;
             }
@@ -127,7 +128,8 @@ public:
 /*
   ✔ Your runtime beats 94.31 % of cpp submissions
   ✔ Your memory usage beats 67.66 % of cpp submissions (10.6 MB)
-  Written by others
+  Written by others 
+  超级牛逼的O(n)算法
 */
         vector<int> m(256, -1);
         int res = 0, left = -1;

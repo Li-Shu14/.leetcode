@@ -14,15 +14,23 @@ using namespace std;
 
 方法二：
 来自力扣中文网。
-202/202 cases passed (12 ms)
-Your runtime beats 15.55 % of cpp submissions
-Your memory usage beats 95.1 % of cpp submissions (9.2 MB)
+202/202 cases passed (8 ms)
+Your runtime beats 74.49 % of cpp submissions
+Your memory usage beats 66.67 % of cpp submissions (9.3 MB)
 该方法关键地成功规避了方法一各种令人头疼的问题：if (nums[i - 1] > 0) nums[i] += nums[i - 1];
 
 方法三：贪心：
 202/202 cases passed (8 ms)
 Your runtime beats 72.27 % of cpp submissions
 Your memory usage beats 66.67 % of cpp submissions (9.3 MB)
+
+方法四：如果要输出这个子数组的起止位置呢？
+https://blog.csdn.net/godric_star/article/details/77529908
+这个代码有点像方法二和三的结合，也许能够反映这类问题的本质？
+202/202 cases passed (4 ms)
+Your runtime beats 98.61 % of cpp submissions
+Your memory usage beats 31.37 % of cpp submissions (9.4 MB)
+
 
 */
 class Solution {
@@ -90,8 +98,24 @@ public:
         return maxSum;
     }
 
-  int maxSubArray(vector<int>& nums) {
-      return maxSubArray1(nums);
+    int maxSubArray4(vector<int>& nums) { //其实把start、end去掉后简化可以成为方法三
+        int maxSum = nums[0],currSum = nums[0];
+        int start = 0, end = 0;
+        for (int i = 1; i < nums.size(); i++) {
+            if (currSum > 0) currSum += nums[i];
+            else if (nums[i] > currSum) { //确定子数组起始位置
+                start = i;
+                currSum = nums[i];    //即使数组全为负，也能得到最大值
+            } //为什么可以这么确定？有没有可能是，如果currSum>0,但还是需要改变start位置的情况呢？
+            if (currSum > maxSum) { //确定子数组结束位置
+                maxSum = currSum;
+                end = i;
+            }   
+        }
+        return maxSum;
+    } 
+    int maxSubArray(vector<int>& nums) {
+      return maxSubArray4(nums);
   }
 
 };

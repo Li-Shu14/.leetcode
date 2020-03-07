@@ -47,6 +47,7 @@ public:
   ✔ Your runtime beats 68.31 % of cpp submissions
   ✔ Your memory usage beats 100 % of cpp submissions (8.1 MB)
   Leetcode: Approach 1: Pop and Push Digits & Check before Overflow
+  核心就是while(x != 0)  pop = x % 10;  x /= 10; rev = rev * 10 + pop; 控制停止条件即可。 背下来这四句话！
 */
         int rev = 0;
         while (x != 0) {

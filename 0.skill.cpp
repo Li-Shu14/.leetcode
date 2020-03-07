@@ -129,71 +129,79 @@ void QuickSort_inv(int array[], int start, int last){ // 逆序
     QuickSort_inv(array, j + 1, last);
 }
 
-void qsort(int* &a, int start, int end) {
-    if (end<=start) return;
-    int i = start, j = end, pivot = a[i];
-    while (i<j) {
-        while(a[j]>=pivot && i<j) j--;
-        if (i<j) a[i++] = a[j];
-        while(a[i]< pivot && i<j) i++;  
-        if (i<j) a[j--] = a[i];
-    }
-    a[i] = pivot;
-    qsort(a,start,i-1);
-    qsort(a,i+1,end);
-}
-
 // 插入排序
 void insertion(vector<int>& arr){ //如果采用数组的话，需要将数组长度统计出来，或者直接通过参数传递进去。
 	for(int i=1;i<arr.size();i++){
 		int pivot=arr[i];
         int j = 0;
-		for(int j=i-1; j>=0 ;j--){
-            if (pivot<arr[j] ) arr[j+1] = arr[j];
+		for(j=i-1; j>=0 ; j--){
+            if (pivot<arr[j]) arr[j+1] = arr[j];
+            else break;
 		}
 		arr[j+1] = pivot;
 	}
 }
 
-
-int main() {
-	int array[11] = {15,7, 3, 19, 4, 63, 2, 99, 18, 1, 25}; 
-	// qsort(array, 0, 10);
-	for(int i = 0; i < 11; i++)  
-		cout << array[i] << "  ";   
-    cout<<endl;  
-    return 0;  
+// 归并排序
+// 这两种方法，前者将创建新空间用来装子数组的过程放到Merge函数里，后者把该过程放到MergeSort主函数内。我感觉前者所占用的空间更小，更好。
+//https://blog.csdn.net/misayaaaaa/article/details/66478422
+void Merge(int a[],int left,int mid,int right) {
+	int length1 = mid-left+1;
+	int length2 = right-mid;
+	int *l1 = new int[length1];
+	int *l2 = new int[length2];
+	for (int i = 0; i < length1; ++i) l1[i] = a[left+i];
+	for (int j = 0; j < length2; ++j) l2[j] = a[j+mid+1];
+	//存入原内容之后，比较两个序列
+	int i = 0,j = 0;
+	while (i<length1 && j<length2) {
+		if (l1[i] < l2[j]) a[left++] = l1[i++];
+		else a[left++] = l2[j++];
+	}
+	//两序列的剩余部分分别放于结尾
+	while (i<length1) a[left++] = l1[i++];
+	while (j<length2) a[left++] = l2[j++];
+	//分配的内存需要释放掉
+	delete []l1;
+	delete []l2;
 }
 
-void QuickSort_dir(int array[], int start, int last) {   
-    if (start >= last) return; //只有一个元素时(甚至没有元素时，这种情况是存在的，比如一个已经从小到大排好的数组)到达递归终点
-    int i = start, j = last, pivot = array[i];
-    while (i < j) {
-        while (array[j] >= pivot && i < j) j--;
-        if (i < j) array[i++] = array[j];
-        while (array[i] <  pivot && i < j) i++;
-        if (i < j) array[j--] = array[i];
-    }
-    array[i] = pivot; //把基准数放到i位置
-    QuickSort_dir(array, start, i - 1);
-    QuickSort_dir(array, i + 1, last);
+void MergeSort(int a[],int left,int right) {
+	if (left >= right) return;
+    int mid = (left+right)/2;//首先进行分区，然后递归操作
+    MergeSort(a,left,mid);
+    MergeSort(a,mid+1,right);//第一次将其分为两个区间，进行合并操作
+    Merge(a,left,mid,right); //其实Merge直接放到主函数MergeSort里也可以，就是有点冗长。
 }
 
-void quicksort(int a[],int start, int end) {
-    if(start>=end) return;
-    int i=start,j=end;
-    int pivot=a[i];
-    while(i<j) {
-        while(a[j] >= pivot && i<j) j--;
-        if (i<j) a[i++] = a[j];
-        while(a[i] < pivot && i<j) i++;
-        if (i<j) a[j--] = a[i];
-    }
-    a[i] = pivot;
-    quicksort(a,start,i-1);
-    quicksort(a,i+1,end);
-    
+// 归并排序2
+//https://blog.csdn.net/a130737/article/details/38228369
+void Merge(int *A, int *L, int leftLength, int *R, int rightLength) {
+	int i = 0, j = 0, k = 0; 
+	while (i < leftLength && j < rightLength) {
+		if(L[i] < R[j]) A[k++] = L[i++];
+		else A[k++] = R[j++];
+	}
+	while(i < leftLength)  A[k++] = L[i++];
+	while(j < rightLength) A[k++] = R[j++];
 }
+ 
+void MergeSort(int *A, int n) {
+	if (n < 2) return;
+    int mid = n/2, i = 0;
+	// create left and right subarrays
+    int* L = new int[mid];
+    int* R = new int [n - mid];
+	for(i = 0;i<mid;i++) L[i] = A[i];
+	for(i = mid;i<n;i++) R[i-mid] = A[i];
+	MergeSort(L,mid);  
+	MergeSort(R,n-mid);  
+	Merge(A,L,mid,R,n-mid);
+	// the delete operations is very important
+	delete [] R;
+	delete [] L;
+}
+
 
 // 二分查找：见704题
 // 如果把移位操作换成普通的除以2，则内存占用会稍微多一点点。速度影响不大。
@@ -207,3 +215,16 @@ void quicksort(int a[],int start, int end) {
         }
         return -1;
     }
+
+/*
+补充一个形象地记忆除以2效果的内容：
+   数组          | (l+r)/2    |  (l+r+1)/2
+[0, 1, 2, 3]    |  (0+3)/2=1 |  (0+3+1)/2=2
+[0, 1, 2, 3, 4] |  (0+4)/2=2 |  (0+4+1)/2=2
+*/
+
+/* 二叉树的相关算法：
+102 中序遍历（同时补充了先序遍历和后序遍历）
+105 由先序遍历和中序遍历重建二叉树
+
+*/
