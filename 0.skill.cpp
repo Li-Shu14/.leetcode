@@ -100,6 +100,45 @@ void QuickSort_dir(int array[], int start, int last) {
     QuickSort_dir(array, i + 1, last);
 }
 
+void quicksort(int a[],int low, int high) {
+    if (low>=high) return;
+    int i = low, j = high,pivot = a[i];
+    while(i < j) {
+        while(a[j]>=pivot && i<j) j--;
+        if (i<j) a[i++] = a[j];
+        while(a[i]<pivot && i<j) i++;
+        if (i<j) a[j--] = a[i];
+    }
+    a[i] = pivot;
+    quicksort(a,low,i-1);
+    quicksort(a,i+1,high);
+}
+
+// 延伸：由快速排序衍生出的同类算法，快速选择。第215题。选第k最大的数
+int findKthLargest2(vector<int>& nums, int k) {
+    int high = nums.size();
+    int low = 0;
+    while (low < high) {
+        int i = low;
+        int j = high-1;
+        if (high - low > 2) {
+            int index = low + rand()%(high-low-1);
+            swap(nums[low],nums[index]);
+        }
+        int pivot = nums[low];
+        while (i <= j) {
+            while (i <= j && nums[i] >= pivot) i++;
+            while (i <= j && nums[j] < pivot) j--;
+            if (i < j) swap(nums[i++],nums[j--]);
+        }
+        swap(nums[low],nums[j]);
+        if (j == k-1) return nums[j];
+        else if (j < k-1) low = j+1;
+        else high = j;   
+    }
+    return 0;
+}
+
 //从右往左排。
 void QuickSort_dir2(int array[], int start, int last) {   // 逆序
     if (start >= last) return; //只有一个元素时到达递归终点
@@ -201,6 +240,8 @@ void MergeSort(int *A, int n) {
 	delete [] R;
 	delete [] L;
 }
+
+// 堆排序 可以直接百度。大顶（根）堆。priority_queue。
 
 
 // 二分查找：见704题

@@ -42,8 +42,6 @@ using namespace std;
 
 class UnionFind {
 public:
-
-
     int find_recrusive(int i) { // path compression
         if (parent[i] != i) parent[i] = find(parent[i]);
         return parent[i];
