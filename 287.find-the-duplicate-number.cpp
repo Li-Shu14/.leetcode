@@ -28,6 +28,12 @@ FLoyd算法。两阶段双指针法。（第一阶段快慢指针，第二阶段
 16 ms, 在所有 C++ 提交中击败了63.77%的用户
 内存消耗 :
 10.8 MB, 在所有 C++ 提交中击败了13.33%的用户
+
+方法四： 二分法！！
+执行用时 :
+24 ms, 在所有 C++ 提交中击败了29.44%的用户
+内存消耗 :
+10.8 MB, 在所有 C++ 提交中击败了13.33%的用户
  */
 
 // @lc code=start
@@ -67,6 +73,22 @@ public:
         }
         return IS;
     }
+
+    int findDuplicate4(vector<int> &nums) {
+        int left = 1;
+        int right = nums.size(); - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int cnt = 0;
+            for (int num : nums) {
+                if (num <= mid) cnt++;
+            }
+            if (cnt > mid) right = mid;
+            else left = mid + 1;
+        }
+        return left;
+    }
+
     int findDuplicate(vector<int>& nums) {
         return findDuplicate3(nums);
     }

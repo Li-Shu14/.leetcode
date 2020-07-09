@@ -68,5 +68,12 @@ public:
         string res = s.substr(h,max_len);
         return res;
     }
+
+    /*方法二：
+    manacher算法
+    */
+    
+
+
 };
 
