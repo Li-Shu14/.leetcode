@@ -79,16 +79,21 @@ int partition(int array[], int l, int r){
 }
 
 void QuickSort(int array[], int l, int r) {
-    if (l < r) {
-        int pivot = partition(array,l,r);   
-        QuickSort(array,l,pivot-1);
-        QuickSort(array,pivot+1,r);
-    }
+    if (l >= r) return;
+    int i = partition(array, l, r);   
+    QuickSort(array, l, i - 1);
+    QuickSort(array, i + 1, r);
 }
+
 // 最一般的：从小到大，每次以最左边
 void QuickSort_dir(int array[], int start, int last) {   
     if (start >= last) return; //只有一个元素时(甚至没有元素时，这种情况是存在的，比如一个已经从小到大排好的数组)到达递归终点
-    int i = start, j = last, pivot = array[i];
+    int i = start, j = last;
+    if (j > i + 1) {
+        int index = i + rand()%(j-i-1);
+        swap(array[i],array[index]);
+    }
+    int pivot = array[i];
     while (i < j) {
         while (array[j] >= pivot && i < j) j--;
         if (i < j) array[i++] = array[j];
@@ -114,6 +119,92 @@ void quicksort(int a[],int low, int high) {
     quicksort(a,i+1,high);
 }
 
+void quicksort(int a[],int low, int high) {
+    if (low>=high) return;
+    int i = low, j = high,pivot = a[i];
+    while(i < j) {
+        while(a[j]>=pivot && i<j) j--;
+        while(a[i]<pivot && i<j) i++; // 这里不要取等号。否则会错！
+        if (i<j) swap(a[i],a[j]);
+    }
+    a[i] = pivot;
+    quicksort(a,low,i-1);
+    quicksort(a,i+1,high);
+}
+
+
+void quicksort(int a[],int low, int high) {
+    if (low>=high) return;
+    int i = low, j = high,pivot = a[i];
+    while(i < j) {
+        while(a[j]>=pivot && i<j) j--;
+        while(a[i]<=pivot && i<j) i++; // 这里取等号。就需要稍微调整下后面的代码
+        if (i<j) swap(a[i],a[j]);
+    }
+    swap(a[start],a[i]); // a[i] = pivot换成这一项。
+    quicksort(a,low,i-1);
+    quicksort(a,i+1,high);
+}
+
+//wk的快速选择方法,选择第k小的数。这个算法其实同时还能够保证最后的数组的前k个数是最小的k个数（可能并非顺序）。
+void qsort(int start, int end, int k, vector<int>& input){
+        if(end - start + 1 <= k) return;
+        int i = start, j = end, mid = input[start];
+        while(i < j){
+            while(i < j && input[j] >= mid) j--;
+            while(i < j && input[i] <= mid) i++;
+            if(i < j) swap(input[i], input[j]);
+        }
+        swap(input[start],input[i]);
+
+        if(i - start + 1> k) qsort(start, i - 1, k, input);    //这个地方注意-1
+        else if(i - start + 1 == k) return;
+        else qsort(i + 1, end, k - (i - start + 1), input);
+    }
+
+//堆排序选出k个最小的数
+class Solution {
+public:
+    void downward(int pos, int k, vector<int>& a){
+        int target = -1;
+        if(2 * pos < k && a[2 * pos] > a[pos]){
+            swap(a[pos], a[2 * pos]);
+            target = 2 * pos;
+        }
+        if(2 * pos + 1 < k && a[2 * pos + 1] > a[pos]){
+            swap(a[pos], a[2 * pos + 1]);
+            target = 2 * pos + 1;
+        }
+        if(target != -1) downward(target, k, a);
+    }
+    
+    void upward(int pos, vector<int>& a){
+        if(pos == 0) return;
+        if(a[pos] > a[pos >> 1]){
+            swap(a[pos], a[pos >> 1]);
+            upward(pos >> 1, a);
+        }
+    }
+    
+    vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+        //大根堆
+        if(input.size() < k || input.size() == 0 || k == 0) return {};
+        vector<int> heap(k);
+        for(int i=0; i<k; i++){
+            heap[i] = input[i];
+            upward(i, heap);
+        }
+        for(int i=k; i<input.size(); i++){
+            if(input[i] < heap[0]){
+                heap[0] = input[i];
+                downward(0, k, heap);
+            }
+        }
+        return heap;
+    }
+};
+
+
 // 延伸：由快速排序衍生出的同类算法，快速选择。第215题。选第k最大的数
 int findKthLargest2(vector<int>& nums, int k) {
     int high = nums.size();
@@ -121,9 +212,9 @@ int findKthLargest2(vector<int>& nums, int k) {
     while (low < high) {
         int i = low;
         int j = high-1;
-        if (high - low > 2) {
-            int index = low + rand()%(high-low-1);
-            swap(nums[low],nums[index]);
+        if (j > i + 1) {
+            int index = i + rand()%(j-i);
+            swap(nums[i],nums[index]);
         }
         int pivot = nums[low];
         while (i <= j) {
@@ -242,9 +333,12 @@ void MergeSort(int *A, int n) {
 }
 
 // 堆排序 可以直接百度。大顶（根）堆。priority_queue。
+～堆排序，选择第K大的数也可以用快速选择（见wk整理的剑指offer29题）
+
 
 
 // 二分查找：见704题
+// 旋转数组的二分查找————33题
 // 如果把移位操作换成普通的除以2，则内存占用会稍微多一点点。速度影响不大。
     int search(vector<int>& a, int target) {
         int l = 0, r = a.size()-1, mid;
@@ -253,6 +347,73 @@ void MergeSort(int *A, int n) {
             if (a[mid] == target) return mid;
             else if (a[mid] > target) r = mid - 1;
             else l = mid + 1;
+        }
+        return -1;
+    }
+    
+
+// 二分查找的几种变体：
+// https://blog.csdn.net/zlx_code/article/details/89081362
+// 查找第一个值等于给定值的元素
+int search2(vector<int>& a, int target) {
+        int l = 0, r = a.size()-1, mid;
+        while(l <= r) {
+            mid = (l + r) >> 1; 
+            if (a[mid] == target) {
+                // 如果相等，那么先查mid是否为0，或者 mid的前一个值是否等于value
+                // 如果是第一个数，或者mid前一个数不等于 value，那么就找到第一个值等于value的元素
+                if( (mid == 0) || (a[mid - 1] != target)) return mid;
+                // 否则 value 肯定在 [low , mid - 1] 区间，更新high的值
+                else r = mid - 1;   
+            }
+            else if (a[mid] > target) r = mid - 1;
+            else l = mid + 1;
+        }
+        return -1;
+    }
+// 查找最后一个值等于给定值的元素
+int search2(vector<int>& a, int target) {
+        int l = 0, r = a.size()-1, mid;
+        while(l <= r) {
+            mid = (l + r) >> 1; 
+            if (a[mid] == target) {
+                if( (mid == a.size()-1) || (a[mid + 1] != target)) return mid;
+                // 否则 value 肯定在 [low , mid - 1] 区间，更新high的值
+                else l = mid + 1;
+            }
+            else if (a[mid] > target) r = mid - 1;
+            else l = mid + 1;
+        }
+        return -1;
+    }
+// 查找第一个大于等于给定值的元素
+int search3(vector<int>& a, int target) {
+        int l = 0, r = a.size()-1, mid;
+        while(l <= r) {
+            mid = (l + r) >> 1; 
+            if (a[mid] >= target) {
+                if((mid == 0) || (a[mid - 1] < target)) return mid;
+                else r = mid - 1;
+            }
+            else {
+                l = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+// 查找最后一个小于等于给定值的元素
+int search4(vector<int>& a, int target) {
+        int l = 0, r = a.size()-1, mid;
+        while(l <= r) {
+            mid = (l + r) >> 1; 
+            if (a[mid] <= target) {
+                if((mid == a.size()-1) || (a[mid + 1] > target)) return mid;
+                else l = mid + 1;
+            }
+            else {
+                r = mid - 1;
+            }
         }
         return -1;
     }
@@ -265,7 +426,96 @@ void MergeSort(int *A, int n) {
 */
 
 /* 二叉树的相关算法：
-102 中序遍历（同时补充了先序遍历和后序遍历）
+94 中序遍历（同时补充了先序遍历和后序遍历）
+102 层序遍历
 105 由先序遍历和中序遍历重建二叉树
 
 */
+void getnext(vector<int>& next, string& p){
+    int k = 0;
+    for(int i=1; i<p.size(); i++){
+        k = next[i];
+        while(k && p[k] != p[i]) k = next[k];
+        next[i+1] = (p[k] == p[i]) ? k + 1: 0;
+    }
+}
+
+int kmp(vector<int>& next, string& s, string& p){
+    int k = 0;
+    for(int i=0; i<s.size(); i++){
+        while(k && s[i] != p[k]) k = next[k];
+        if(s[i] == p[k]) k++;
+        if(k == pLen) return i - p.size() + 1;
+    }
+    return -1;
+}
+
+
+//整数转字符串
+string transform(int num) {
+    string res;
+    stringstream ss;
+    ss << num;
+    ss >> res;
+    if (num < 10) res = "0" + res;
+    return res;
+}
+
+
+
+
+void quicksort(vector<int>& a,int l, int r) {
+    if (l>=r) return;
+    int i = l, j = r;
+    if (j - i > 1) {
+        int temp = i + rand() % (j - i -1);
+        swap(a[temp],a[i]);
+    }
+    int pivot = a[i];
+    while(i<j) {
+        while(i<j && a[j]>=pivot) j--;
+        while(i<j && a[i]<pivot) i++;
+        if (i < j) swap(a[i],a[j]);
+    }
+    a[i] = pivot;
+    quicksort(a,l,i-1);
+    quicksort(a,i+1,r);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
