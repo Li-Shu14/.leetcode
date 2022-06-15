@@ -124,7 +124,7 @@ void quicksort(int a[],int low, int high) {
     int i = low, j = high,pivot = a[i];
     while(i < j) {
         while(a[j]>=pivot && i<j) j--;
-        while(a[i]<pivot && i<j) i++; // 这里不要取等号。否则会错！
+        while(a[i]<pivot && i<j) i++; // 这里不要取等号。否则会错！但如果不取等号，那么这个算法的效率就会降一半...所以还是建议使用小等于。
         if (i<j) swap(a[i],a[j]);
     }
     a[i] = pivot;
