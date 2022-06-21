@@ -260,15 +260,14 @@ void QuickSort_inv(int array[], int start, int last){ // 逆序
 }
 
 // 插入排序
-void insertion(vector<int>& arr){ //如果采用数组的话，需要将数组长度统计出来，或者直接通过参数传递进去。
-	for(int i=1;i<arr.size();i++){
-		int pivot=arr[i];
-        int j = 0;
-		for(j=i-1; j>=0 ; j--){
-            if (pivot<arr[j]) arr[j+1] = arr[j];
+void insertion(vector<int>& arr) { //如果采用数组的话，需要将数组长度统计出来，或者直接通过参数传递进去。
+	for(int i = 1; i < arr.size(); i++){
+		int pivot = arr[i], j = 0;
+		for(j = i - 1; j >= 0 ;j--){
+            if (pivot < arr[j]) arr[j + 1] = arr[j];
             else break;
 		}
-		arr[j+1] = pivot;
+		arr[j + 1] = pivot;
 	}
 }
 
