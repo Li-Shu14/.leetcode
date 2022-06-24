@@ -162,7 +162,9 @@ void qsort(int start, int end, int k, vector<int>& input){
         else qsort(i + 1, end, k - (i - start + 1), input);
     }
 
-//堆排序选出k个最小的数
+// 堆排序 可以直接百度。大顶（根）堆。priority_queue。
+// 堆排序，选择第K大的数也可以用快速选择（见wk整理的剑指offer29题）
+// 堆排序选出k个最小的数
 class Solution {
 public:
     void downward(int pos, int k, vector<int>& a){
@@ -262,12 +264,12 @@ void QuickSort_inv(int array[], int start, int last){ // 逆序
 // 插入排序
 void insertion(vector<int>& arr) { //如果采用数组的话，需要将数组长度统计出来，或者直接通过参数传递进去。
 	for(int i = 1; i < arr.size(); i++){
-		int pivot = arr[i], j = 0;
-		for(j = i - 1; j >= 0 ;j--){
-            if (pivot < arr[j]) arr[j + 1] = arr[j];
+		int temp = arr[i], j = 0; // 每次把temp插入合适的位置
+		for(j = i - 1; j >= 0; j--){
+            if (temp < arr[j]) arr[j + 1] = arr[j];
             else break;
 		}
-		arr[j + 1] = pivot;
+		arr[j] = temp;
 	}
 }
 
@@ -331,45 +333,40 @@ void MergeSort(int *A, int n) {
 	delete [] L;
 }
 
-// 堆排序 可以直接百度。大顶（根）堆。priority_queue。
-～堆排序，选择第K大的数也可以用快速选择（见wk整理的剑指offer29题）
-
-
-
 // 二分查找：见704题
 // 旋转数组的二分查找————33题
 // 如果把移位操作换成普通的除以2，则内存占用会稍微多一点点。速度影响不大。
-    int search(vector<int>& a, int target) {
-        int l = 0, r = a.size()-1, mid;
-        while(l <= r) {
-            mid = (l + r) >> 1; 
-            if (a[mid] == target) return mid;
-            else if (a[mid] > target) r = mid - 1;
-            else l = mid + 1;
-        }
-        return -1;
+int search(vector<int>& a, int target) {
+    int l = 0, r = a.size()-1, mid;
+    while(l <= r) {
+        mid = (l + r) >> 1; 
+        if (a[mid] == target) return mid;
+        else if (a[mid] > target) r = mid - 1;
+        else l = mid + 1;
     }
+    return -1;
+}
     
 
 // 二分查找的几种变体：
 // https://blog.csdn.net/zlx_code/article/details/89081362
 // 查找第一个值等于给定值的元素
 int search2(vector<int>& a, int target) {
-        int l = 0, r = a.size()-1, mid;
-        while(l <= r) {
-            mid = (l + r) >> 1; 
-            if (a[mid] == target) {
-                // 如果相等，那么先查mid是否为0，或者 mid的前一个值是否等于value
-                // 如果是第一个数，或者mid前一个数不等于 value，那么就找到第一个值等于value的元素
-                if( (mid == 0) || (a[mid - 1] != target)) return mid;
-                // 否则 value 肯定在 [low , mid - 1] 区间，更新high的值
-                else r = mid - 1;   
-            }
-            else if (a[mid] > target) r = mid - 1;
-            else l = mid + 1;
+    int l = 0, r = a.size()-1, mid;
+    while(l <= r) {
+        mid = (l + r) >> 1; 
+        if (a[mid] == target) {
+            // 如果相等，那么先查mid是否为0，或者 mid的前一个值是否等于value
+            // 如果是第一个数，或者mid前一个数不等于 value，那么就找到第一个值等于value的元素
+            if( (mid == 0) || (a[mid - 1] != target)) return mid;
+            // 否则 value 肯定在 [low , mid - 1] 区间，更新high的值
+            else r = mid - 1;   
         }
-        return -1;
+        else if (a[mid] > target) r = mid - 1;
+        else l = mid + 1;
     }
+    return -1;
+}
 // 查找最后一个值等于给定值的元素
 int search2(vector<int>& a, int target) {
         int l = 0, r = a.size()-1, mid;
@@ -428,8 +425,9 @@ int search4(vector<int>& a, int target) {
 94 中序遍历（同时补充了先序遍历和后序遍历）
 102 层序遍历
 105 由先序遍历和中序遍历重建二叉树
-
 */
+
+// KMP 字符串匹配算法
 void getnext(vector<int>& next, string& p){
     int k = 0;
     for(int i=1; i<p.size(); i++){
@@ -440,8 +438,8 @@ void getnext(vector<int>& next, string& p){
 }
 
 int kmp(vector<int>& next, string& s, string& p){
-    int k = 0;
-    for(int i=0; i<s.size(); i++){
+    int k = 0, pLen = p.length();
+    for(int i=0; i<s.size(); i++) {
         while(k && s[i] != p[k]) k = next[k];
         if(s[i] == p[k]) k++;
         if(k == pLen) return i - p.size() + 1;
